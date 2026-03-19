@@ -55,7 +55,7 @@ export function ExportTradesButton({ data, wallet }: ExportTradesButtonProps) {
       <button
         onClick={exportCsv}
         aria-label="Export trades as CSV"
-        className="inline-flex items-center justify-center w-8 h-8 rounded-full text-[var(--color-muted)] hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-[var(--foreground)] transition-colors duration-[var(--transition-fast)]"
+        className="inline-flex items-center justify-center w-8 h-8 rounded-full text-[var(--color-muted)] hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-[var(--foreground)] transition-colors duration-[var(--transition-fast)] focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-inset"
       >
         <DownloadIcon />
       </button>

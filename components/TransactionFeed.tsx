@@ -61,14 +61,14 @@ export function TransactionFeed({ data, isLoading, wallet }: TransactionFeedProp
   const txs = data.data.slice(0, 20);
 
   return (
-    <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900 overflow-hidden shadow-sm">
-      <div className="p-4 border-b border-[var(--color-border)] flex items-center justify-between">
+    <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900 shadow-sm">
+      <div className="px-4 pt-5 pb-4 border-b border-[var(--color-border)] flex items-center justify-between">
         <h2 className="text-lg font-semibold text-[var(--foreground)]">
           Recent Swaps
         </h2>
         <ExportTradesButton data={data} wallet={wallet} />
       </div>
-      <div className="divide-y divide-[var(--color-border)] max-h-96 overflow-y-auto">
+      <div className="divide-y divide-[var(--color-border)] max-h-96 overflow-y-auto overflow-x-hidden rounded-b-[var(--radius-card)]">
         {txs.map((tx) => (
           <a
             key={tx.signature}

@@ -19,8 +19,7 @@ export function useHeliusWebSocket(wallet: string | null, onActivity?: () => voi
     queryClient.invalidateQueries({ queryKey: ["balances", wallet] });
     queryClient.invalidateQueries({ queryKey: ["history", wallet] });
     queryClient.invalidateQueries({ queryKey: ["pnl", wallet] });
-    onActivity?.();
-  }, [wallet, queryClient, onActivity]);
+  }, [wallet, queryClient]);
 
   useEffect(() => {
     if (!wallet) {
@@ -58,7 +57,10 @@ export function useHeliusWebSocket(wallet: string | null, onActivity?: () => voi
           if (msg.result !== undefined) {
             setIsConnected(true);
           }
-          if (msg.method === "accountNotification" || msg.result !== undefined) {
+          if (msg.method === "accountNotification") {
+            refetch();
+            onActivity?.();
+          } else if (msg.result !== undefined) {
             refetch();
           }
         } catch {

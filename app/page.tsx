@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { WalletInput } from "@/components/WalletInput";
 import { HomeIcon } from "@/components/HomeIcon";
@@ -9,6 +9,7 @@ import { PnLChart } from "@/components/PnLChart";
 import { TransactionFeed } from "@/components/TransactionFeed";
 import { StatusBadge } from "@/components/StatusBadge";
 import { ErrorCard } from "@/components/ErrorCard";
+import { Toast } from "@/components/Toast";
 import { useHeliusWebSocket } from "@/hooks/useHeliusWebSocket";
 
 const SMART_MONEY_PRESETS = [
@@ -58,10 +59,24 @@ function useWalletData(wallet: string | null) {
 export default function Home() {
   const queryClient = useQueryClient();
   const [wallet, setWallet] = useState<string | null>(null);
+  const [showUpdatedToast, setShowUpdatedToast] = useState(false);
   const { balances, history, pnl } = useWalletData(wallet);
-  const { isConnected: wsConnected } = useHeliusWebSocket(wallet);
+  const { isConnected: wsConnected } = useHeliusWebSocket(wallet, () => {
+    setShowUpdatedToast(true);
+  });
   const isLoading = balances.isLoading || history.isLoading || pnl.isLoading;
   const error = balances.error ?? history.error ?? pnl.error;
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        document.getElementById("wallet-address")?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const handleRetry = () => {
     if (wallet) {
@@ -165,6 +180,11 @@ export default function Home() {
           </div>
         </main>
       )}
+      <Toast
+        message="Just updated"
+        visible={showUpdatedToast}
+        onDismiss={() => setShowUpdatedToast(false)}
+      />
     </div>
   );
 }

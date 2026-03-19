@@ -49,8 +49,8 @@ function PollingIcon() {
 
 export function StatusBadge({ isLive }: StatusBadgeProps) {
   const tooltip = isLive
-    ? "WebSocket connected — data updates in real time when the wallet has activity"
-    : "Polling mode — data refreshes every 30 seconds (WebSocket unavailable)";
+    ? "Data updates in real time when the wallet has activity"
+    : "Data refreshes every 30 seconds";
 
   return (
     <Tooltip content={tooltip}>
