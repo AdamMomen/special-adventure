@@ -1,5 +1,4 @@
 # Add Python and build tools for node-gyp (required by usb, tiny-secp256k1)
 # These packages are transitive deps of @solana/wallet-adapter-wallets
 [phases.setup]
-nixPkgs = ["...", "python311"]
-aptPkgs = ["...", "build-essential"]
+aptPkgs = ["...", "python3", "build-essential"]
