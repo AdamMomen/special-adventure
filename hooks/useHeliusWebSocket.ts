@@ -12,6 +12,8 @@ function getWssUrl(): string | null {
 export function useHeliusWebSocket(wallet: string | null, onActivity?: () => void) {
   const queryClient = useQueryClient();
   const wsRef = useRef<WebSocket | null>(null);
+  const onActivityRef = useRef(onActivity);
+  onActivityRef.current = onActivity;
   const [isConnected, setIsConnected] = useState(false);
 
   const refetch = useCallback(() => {
@@ -59,7 +61,7 @@ export function useHeliusWebSocket(wallet: string | null, onActivity?: () => voi
           }
           if (msg.method === "accountNotification") {
             refetch();
-            onActivity?.();
+            onActivityRef.current?.();
           } else if (msg.result !== undefined) {
             refetch();
           }

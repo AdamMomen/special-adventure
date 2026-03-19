@@ -50,6 +50,7 @@ export interface HeliusHistoryResponse {
 export interface Position {
   mint: string;
   symbol: string;
+  logoUri?: string;
   totalCost: number;
   totalAmount: number;
   avgEntryPrice: number;

@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { WalletInput } from "@/components/WalletInput";
 import { HomeIcon } from "@/components/HomeIcon";
 import { PortfolioSummary } from "@/components/PortfolioSummary";
 import { PnLChart } from "@/components/PnLChart";
+import { PnLTable } from "@/components/PnLTable";
 import { TransactionFeed } from "@/components/TransactionFeed";
 import { StatusBadge } from "@/components/StatusBadge";
 import { ErrorCard } from "@/components/ErrorCard";
@@ -58,7 +60,17 @@ function useWalletData(wallet: string | null) {
 
 export default function Home() {
   const queryClient = useQueryClient();
-  const [wallet, setWallet] = useState<string | null>(null);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const wallet = searchParams.get("wallet")?.trim() || null;
+
+  const setWallet = (addr: string | null) => {
+    if (addr) {
+      router.replace(`/?wallet=${encodeURIComponent(addr)}`);
+    } else {
+      router.replace("/");
+    }
+  };
   const [showUpdatedToast, setShowUpdatedToast] = useState(false);
   const { balances, history, pnl } = useWalletData(wallet);
   const { isConnected: wsConnected } = useHeliusWebSocket(wallet, () => {
@@ -130,6 +142,7 @@ export default function Home() {
                   isLoading={pnl.isLoading}
                   error={pnl.error as Error | null}
                 />
+                <PnLTable data={pnl.data ?? null} isLoading={pnl.isLoading} />
                 <TransactionFeed
                   data={history.data ?? null}
                   isLoading={history.isLoading}

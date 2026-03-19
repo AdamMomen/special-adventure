@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { HeliusBalancesResponse } from "@/lib/types";
+import { TokenLogo } from "@/components/TokenLogo";
 
 interface PortfolioSummaryProps {
   data: HeliusBalancesResponse | null;
@@ -44,7 +45,8 @@ export function PortfolioSummary({ data, isLoading, wallet }: PortfolioSummaryPr
         <ul className="space-y-2">
           {topHoldings.map((b) => (
             <li key={b.mint} className="flex justify-between items-center text-sm">
-              <span className="font-medium text-[var(--foreground)]">
+              <span className="font-medium text-[var(--foreground)] flex items-center gap-2">
+                <TokenLogo logoUri={b.logoUri} symbol={b.symbol} size="sm" />
                 {b.symbol}
               </span>
               <span className="text-[var(--color-muted)] tabular-nums">

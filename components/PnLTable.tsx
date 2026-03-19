@@ -2,6 +2,7 @@
 
 import type { PnLSummary } from "@/lib/types";
 import { EmptyState } from "@/components/EmptyState";
+import { TokenLogo } from "@/components/TokenLogo";
 
 interface PnLTableProps {
   data: PnLSummary | null;
@@ -106,7 +107,10 @@ export function PnLTable({ data, isLoading }: PnLTableProps) {
                 className="border-b border-[var(--color-border)] hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors duration-[var(--transition-fast)]"
               >
                 <td className="py-3 px-4 font-medium text-[var(--foreground)]">
-                  {p.symbol}
+                  <span className="flex items-center gap-2">
+                    <TokenLogo logoUri={p.logoUri} symbol={p.symbol} size="sm" />
+                    {p.symbol}
+                  </span>
                 </td>
                 <td className="py-3 px-4 text-right text-[var(--color-muted)] tabular-nums">
                   {p.remainingAmount.toLocaleString(undefined, { maximumFractionDigits: 4 })}

@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
+import { TokenLogo } from "@/components/TokenLogo";
 
 function BackIcon() {
   return (
@@ -68,7 +69,7 @@ function TokensContent() {
       <header className="border-b border-[var(--color-border)]">
         <div className="max-w-2xl mx-auto px-4 py-5">
           <Link
-            href="/"
+            href={`/?wallet=${encodeURIComponent(wallet)}`}
             className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-muted)] hover:text-[var(--foreground)] transition-colors mb-4"
           >
             <BackIcon />
@@ -98,7 +99,7 @@ function TokensContent() {
           <div className="rounded-[var(--radius-card)] border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30 p-4">
             <p className="text-sm text-red-700 dark:text-red-300">{String(error)}</p>
             <Link
-              href="/"
+              href={`/?wallet=${encodeURIComponent(wallet)}`}
               className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-red-700 dark:text-red-300 hover:underline"
             >
               <BackIcon />
@@ -109,9 +110,9 @@ function TokensContent() {
 
         {!isLoading && !error && (
           <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900 overflow-hidden shadow-sm">
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto max-h-96 overflow-y-auto">
               <table className="w-full text-sm">
-                <thead>
+                <thead className="sticky top-0 bg-[var(--color-surface)] dark:bg-zinc-900 z-10">
                   <tr className="border-b border-[var(--color-border)]">
                     <th className="text-left py-3 px-4 font-medium text-[var(--color-muted)]">
                       Token
@@ -134,7 +135,10 @@ function TokensContent() {
                       className="border-b border-[var(--color-border)] hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
                     >
                       <td className="py-3 px-4 font-medium text-[var(--foreground)]">
-                        {b.symbol}
+                        <span className="flex items-center gap-2">
+                          <TokenLogo logoUri={b.logoUri} symbol={b.symbol} />
+                          {b.symbol}
+                        </span>
                       </td>
                       <td className="py-3 px-4 text-[var(--color-muted)]">
                         {b.name}

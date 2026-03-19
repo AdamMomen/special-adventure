@@ -97,6 +97,7 @@ export function computePnL(
     positions.push({
       mint,
       symbol,
+      logoUri: balance?.logoUri,
       totalCost,
       totalAmount,
       avgEntryPrice,
