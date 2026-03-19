@@ -1,13 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { useQuery, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { WalletInput } from "@/components/WalletInput";
 import { HomeIcon } from "@/components/HomeIcon";
 import { PortfolioSummary } from "@/components/PortfolioSummary";
 import { PnLChart } from "@/components/PnLChart";
 import { PnLTable } from "@/components/PnLTable";
+import { TradeStatsCard } from "@/components/TradeStatsCard";
 import { TransactionFeed } from "@/components/TransactionFeed";
 import { StatusBadge } from "@/components/StatusBadge";
 import { ErrorCard } from "@/components/ErrorCard";
@@ -33,13 +36,23 @@ function useWalletData(wallet: string | null) {
     refetchInterval: wallet ? 30_000 : false,
   });
 
-  const history = useQuery({
+  const history = useInfiniteQuery({
     queryKey: ["history", wallet],
-    queryFn: async () => {
-      const res = await fetch(`/api/wallet/history?wallet=${wallet}&type=SWAP`);
+    queryFn: async ({ pageParam }: { pageParam?: string }) => {
+      const params = new URLSearchParams({
+        wallet: wallet!,
+        type: "SWAP",
+        limit: "20",
+        tokenAccounts: "balanceChanged",
+      });
+      if (pageParam) params.set("before", pageParam);
+      const res = await fetch(`/api/wallet/history?${params}`);
       if (!res.ok) throw new Error(await res.json().then((j) => j.error ?? "Failed"));
       return res.json();
     },
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (lastPage) =>
+      lastPage.pagination?.hasMore ? lastPage.pagination.nextCursor ?? undefined : undefined,
     enabled: !!wallet,
     refetchInterval: wallet ? 30_000 : false,
   });
@@ -64,15 +77,25 @@ export default function Home() {
   const searchParams = useSearchParams();
   const wallet = searchParams.get("wallet")?.trim() || null;
 
-  const setWallet = (addr: string | null) => {
-    if (addr) {
-      router.replace(`/?wallet=${encodeURIComponent(addr)}`);
-    } else {
-      router.replace("/");
-    }
-  };
+  const setWallet = useCallback(
+    (addr: string | null) => {
+      if (addr) {
+        router.replace(`/?wallet=${encodeURIComponent(addr)}`);
+      } else {
+        router.replace("/");
+      }
+    },
+    [router]
+  );
   const [showUpdatedToast, setShowUpdatedToast] = useState(false);
+  const { publicKey } = useWallet();
   const { balances, history, pnl } = useWalletData(wallet);
+
+  useEffect(() => {
+    if (publicKey && !wallet) {
+      setWallet(publicKey.toBase58());
+    }
+  }, [publicKey, wallet, setWallet]);
   const { isConnected: wsConnected } = useHeliusWebSocket(wallet, () => {
     setShowUpdatedToast(true);
   });
@@ -112,7 +135,10 @@ export default function Home() {
                   Track wallet P&L across memecoin trades — powered by Helius
                 </p>
               </div>
-              <StatusBadge isLive={wsConnected} />
+              <div className="flex items-center gap-3">
+                <WalletMultiButton className="!rounded-[var(--radius-input)] !bg-violet-600 hover:!bg-violet-700 !text-white !text-sm !font-medium !h-9 !px-4" />
+                <StatusBadge isLive={wsConnected} />
+              </div>
             </div>
           </header>
 
@@ -142,11 +168,28 @@ export default function Home() {
                   isLoading={pnl.isLoading}
                   error={pnl.error as Error | null}
                 />
+                <TradeStatsCard
+                  data={pnl.data?.tradeStats ?? null}
+                  isLoading={pnl.isLoading}
+                />
                 <PnLTable data={pnl.data ?? null} isLoading={pnl.isLoading} />
                 <TransactionFeed
-                  data={history.data ?? null}
+                  data={
+                    history.data
+                      ? {
+                          data: history.data.pages.flatMap((p) => p.data),
+                          pagination: history.data.pages[history.data.pages.length - 1]?.pagination ?? {
+                            hasMore: false,
+                            nextCursor: null,
+                          },
+                        }
+                      : null
+                  }
                   isLoading={history.isLoading}
                   wallet={wallet}
+                  fetchNextPage={history.fetchNextPage}
+                  hasNextPage={history.hasNextPage}
+                  isFetchingNextPage={history.isFetchingNextPage}
                 />
               </div>
             </div>
@@ -164,8 +207,12 @@ export default function Home() {
               Solana Memecoin P&L Tracker
             </h1>
             <p className="text-sm text-[var(--color-muted)] mb-8">
-              Enter a wallet address to track portfolio, P&L, and swap history
+              Connect your wallet or enter an address to track portfolio, P&L, and swap history
             </p>
+            <div className="flex flex-col items-center gap-4 w-full mb-6">
+              <WalletMultiButton className="!rounded-[var(--radius-input)] !bg-violet-600 hover:!bg-violet-700 !text-white !text-sm !font-medium !h-11 !px-6" />
+              <span className="text-xs text-[var(--color-muted)]">or</span>
+            </div>
             <div className="w-full mb-6">
               <WalletInput
                 onSearch={setWallet}

@@ -61,11 +61,23 @@ export interface Position {
   usdValue: number | null;
 }
 
+export interface TradeStats {
+  totalTrades: number;
+  wins: number;
+  losses: number;
+  winRate: number;
+  avgWin: number;
+  avgLoss: number;
+  bestTrade: number;
+  worstTrade: number;
+}
+
 export interface PnLSummary {
   totalRealizedPnl: number;
   totalUnrealizedPnl: number;
   totalPnl: number;
   totalVolume: number;
+  tradeStats: TradeStats;
   positions: Position[];
   pnlOverTime: { timestamp: number; cumulativePnl: number }[];
 }

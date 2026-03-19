@@ -11,6 +11,9 @@ interface TransactionFeedProps {
   data: HeliusHistoryResponse | null;
   isLoading: boolean;
   wallet: string | null;
+  fetchNextPage?: () => void;
+  hasNextPage?: boolean;
+  isFetchingNextPage?: boolean;
 }
 
 function formatChange(c: { mint: string; amount: number; decimals: number }): string {
@@ -42,7 +45,14 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
-export function TransactionFeed({ data, isLoading, wallet }: TransactionFeedProps) {
+export function TransactionFeed({
+  data,
+  isLoading,
+  wallet,
+  fetchNextPage,
+  hasNextPage,
+  isFetchingNextPage,
+}: TransactionFeedProps) {
   if (isLoading) {
     return (
       <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900 p-6 animate-pulse shadow-sm">
@@ -58,7 +68,7 @@ export function TransactionFeed({ data, isLoading, wallet }: TransactionFeedProp
 
   if (!data) return null;
 
-  const txs = data.data.slice(0, 20);
+  const txs = data.data;
 
   return (
     <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900 shadow-sm">
@@ -66,7 +76,10 @@ export function TransactionFeed({ data, isLoading, wallet }: TransactionFeedProp
         <h2 className="text-lg font-semibold text-[var(--foreground)]">
           Recent Swaps
         </h2>
-        <ExportTradesButton data={data} wallet={wallet} />
+        <ExportTradesButton
+          data={{ data: txs, pagination: data.pagination }}
+          wallet={wallet}
+        />
       </div>
       <div className="divide-y divide-[var(--color-border)] max-h-96 overflow-y-auto overflow-x-hidden rounded-b-[var(--radius-card)]">
         {txs.map((tx) => (
@@ -121,6 +134,18 @@ export function TransactionFeed({ data, isLoading, wallet }: TransactionFeedProp
           </a>
         ))}
       </div>
+      {hasNextPage && fetchNextPage && (
+        <div className="p-4 border-t border-[var(--color-border)]">
+          <button
+            type="button"
+            onClick={() => fetchNextPage()}
+            disabled={isFetchingNextPage}
+            className="w-full py-2 text-sm font-medium text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 disabled:opacity-50 transition-colors"
+          >
+            {isFetchingNextPage ? "Loading…" : "Load more"}
+          </button>
+        </div>
+      )}
       {txs.length === 0 && (
         <EmptyState
           title="No swap transactions found."

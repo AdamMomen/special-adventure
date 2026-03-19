@@ -4,13 +4,44 @@ import type {
   Position,
   PnLSummary,
   HeliusBalance,
+  TradeStats,
 } from "./types";
 
 const SOL_MINT = "So11111111111111111111111111111111111111112";
 
 function getUsdValue(amount: number, mint: string, prices: Record<string, number>): number {
   const m = mint === "SOL" ? SOL_MINT : mint;
-  return Math.abs(amount) * (prices[m] ?? 0);
+    return Math.abs(amount) * (prices[m] ?? 0);
+}
+
+export function computeTradeStats(
+  transactions: HeliusTransaction[],
+  prices: Record<string, number>
+): TradeStats {
+  const pnls: number[] = [];
+  for (const tx of transactions) {
+    if (tx.error) continue;
+    const costUsd = tx.balanceChanges
+      .filter((c) => c.amount < 0)
+      .reduce((s, c) => s + getUsdValue(c.amount, c.mint === "SOL" ? SOL_MINT : c.mint, prices), 0);
+    const proceedsUsd = tx.balanceChanges
+      .filter((c) => c.amount > 0)
+      .reduce((s, c) => s + getUsdValue(c.amount, c.mint === "SOL" ? SOL_MINT : c.mint, prices), 0);
+    pnls.push(proceedsUsd - costUsd);
+  }
+  const wins = pnls.filter((p) => p > 0);
+  const losses = pnls.filter((p) => p < 0);
+  const totalTrades = pnls.length;
+  return {
+    totalTrades,
+    wins: wins.length,
+    losses: losses.length,
+    winRate: totalTrades > 0 ? wins.length / totalTrades : 0,
+    avgWin: wins.length > 0 ? wins.reduce((a, b) => a + b, 0) / wins.length : 0,
+    avgLoss: losses.length > 0 ? losses.reduce((a, b) => a + b, 0) / losses.length : 0,
+    bestTrade: pnls.length > 0 ? Math.max(...pnls) : 0,
+    worstTrade: pnls.length > 0 ? Math.min(...pnls) : 0,
+  };
 }
 
 export function computePnL(
@@ -45,6 +76,9 @@ export function computePnL(
     const costUsd = sold.reduce((s, c) => s + getUsdValue(c.amount, c.mint, prices), 0);
     const proceedsUsd = received.reduce((s, c) => s + getUsdValue(c.amount, c.mint, prices), 0);
 
+    const txRealizedPnl = proceedsUsd - costUsd;
+    totalRealizedPnl += txRealizedPnl;
+
     for (const s of sold) {
       const soldMint = s.mint;
       const soldAmount = Math.abs(s.amount);
@@ -52,8 +86,6 @@ export function computePnL(
       const totalAmount = positionAmount.get(soldMint) ?? 0;
       const avgCost = totalAmount > 0 ? totalCost / totalAmount : 0;
       const costBasis = avgCost * Math.min(soldAmount, totalAmount);
-      const realized = proceedsUsd - costBasis;
-      totalRealizedPnl += realized;
       positionCost.set(soldMint, totalCost - costBasis);
       positionAmount.set(soldMint, totalAmount - soldAmount);
     }
@@ -134,11 +166,14 @@ export function computePnL(
 
   pnlOverTime.sort((a, b) => a.timestamp - b.timestamp);
 
+  const tradeStats = computeTradeStats(sorted, prices);
+
   return {
     totalRealizedPnl,
     totalUnrealizedPnl,
     totalPnl: totalRealizedPnl + totalUnrealizedPnl,
     totalVolume,
+    tradeStats,
     pnlOverTime,
     positions: positions.filter(
       (p) => p.remainingAmount > 0 || p.totalAmount > 0
