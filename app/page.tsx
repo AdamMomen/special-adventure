@@ -12,7 +12,6 @@ import { PnLChart } from "@/components/PnLChart";
 import { PnLTable } from "@/components/PnLTable";
 import { TradeStatsCard } from "@/components/TradeStatsCard";
 import { TransactionFeed } from "@/components/TransactionFeed";
-import { StatusBadge } from "@/components/StatusBadge";
 import { ErrorCard } from "@/components/ErrorCard";
 import { Toast } from "@/components/Toast";
 import { useHeliusWebSocket } from "@/hooks/useHeliusWebSocket";
@@ -89,7 +88,7 @@ function PageContent() {
       setWallet(publicKey.toBase58());
     }
   }, [publicKey, wallet, setWallet]);
-  const { isConnected: wsConnected } = useHeliusWebSocket(wallet, () => {
+  useHeliusWebSocket(wallet, () => {
     setShowUpdatedToast(true);
   });
   const isLoading = balances.isLoading || history.isLoading || pnl.isLoading;
@@ -129,8 +128,7 @@ function PageContent() {
                 </p>
               </div>
               <div className="flex items-center gap-3">
-                <WalletMultiButton className="!rounded-[var(--radius-input)] !bg-violet-600 hover:!bg-violet-700 !text-white !text-sm !font-medium !h-9 !px-4" />
-                <StatusBadge isLive={wsConnected} />
+                <WalletMultiButton className="!rounded-[var(--radius-input)] !bg-gradient-to-r !from-violet-600 !to-purple-600 hover:!from-violet-700 hover:!to-purple-700 !text-white !text-sm !font-medium !h-9 !px-4 glow-button" />
               </div>
             </div>
           </header>
