@@ -198,12 +198,8 @@ function PageContent() {
               Solana Portfolio P&L Tracker
             </h1>
             <p className="text-sm text-[var(--color-muted)] mb-8">
-              Connect your wallet or enter an address to track portfolio, P&L, and swap history
+              Enter a wallet address to track portfolio, P&L, and swap history
             </p>
-            <div className="flex flex-col items-center gap-4 w-full mb-6">
-              <WalletMultiButton className="!rounded-[var(--radius-input)] !bg-violet-600 hover:!bg-violet-700 !text-white !text-sm !font-medium !h-11 !px-6" />
-              <span className="text-xs text-[var(--color-muted)]">or</span>
-            </div>
             <div className="w-full mb-6">
               <WalletInput
                 onSearch={setWallet}
@@ -216,6 +212,10 @@ function PageContent() {
                 <ErrorCard message={String(error)} onRetry={handleRetry} />
               </div>
             )}
+            <div className="flex items-center gap-3 text-xs text-[var(--color-muted)]">
+              <span>Or connect your wallet</span>
+              <WalletMultiButton className="!rounded-[var(--radius-input)] !bg-zinc-100 dark:!bg-zinc-800 hover:!bg-zinc-200 dark:hover:!bg-zinc-700 !text-[var(--foreground)] !text-xs !font-medium !h-8 !px-3 !min-w-0" />
+            </div>
           </div>
         </main>
       )}
