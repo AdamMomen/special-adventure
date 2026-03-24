@@ -17,13 +17,6 @@ import { ErrorCard } from "@/components/ErrorCard";
 import { Toast } from "@/components/Toast";
 import { useHeliusWebSocket } from "@/hooks/useHeliusWebSocket";
 
-const SMART_MONEY_PRESETS = [
-  { label: "Helius example", address: "86xCnPeV69n6t3DnyGvkKobf9FdN2H9oiVDdaMpo2MMY" },
-  { label: "Cupseyy (recent only)", address: "suqh5sHtr8HyJ7q8scBimULPkPpA557prMG47xCHQfK" },
-  { label: "Dez (Bonk creator)", address: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263" },
-  { label: "Ansem (WIF early)", address: "AVAZvHLR2PcWpDf8BXY4rVxNHYRBytycHkcB5z5QNXYm" },
-];
-
 function useWalletData(wallet: string | null) {
   const balances = useQuery({
     queryKey: ["balances", wallet],
@@ -225,18 +218,7 @@ function PageContent() {
                 <ErrorCard message={String(error)} onRetry={handleRetry} />
               </div>
             )}
-            <p className="text-xs text-[var(--color-muted)] mb-3">Smart money — try these</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              {SMART_MONEY_PRESETS.map(({ label, address }) => (
-                <button
-                  key={address}
-                  onClick={() => setWallet(address)}
-                  className="px-4 py-2 rounded-[var(--radius-input)] bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-sm font-medium transition-colors duration-[var(--transition-fast)]"
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
+            
           </div>
         </main>
       )}
