@@ -38,14 +38,14 @@ export function WalletInput({ onSearch, isLoading, currentWallet }: WalletInputP
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
         aria-label="Solana wallet address"
-        className="flex-1 px-4 py-3 rounded-[var(--radius-input)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900 text-[var(--foreground)] placeholder-[var(--color-muted)] focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-0 focus:border-transparent transition-colors duration-[var(--transition-fast)] disabled:opacity-60"
+        className="flex-1 px-4 py-3 rounded-[var(--radius-input)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900/50 text-[var(--foreground)] placeholder-[var(--color-muted)] focus:outline-none glow-input disabled:opacity-60"
         disabled={isLoading}
       />
       <button
         type="submit"
         disabled={isLoading || !value.trim()}
         aria-label="Track wallet"
-        className="px-6 py-3 rounded-[var(--radius-input)] bg-violet-600 hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium transition-colors duration-[var(--transition-fast)]"
+        className="px-6 py-3 rounded-[var(--radius-input)] bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium glow-button"
       >
         {isLoading ? "Loading..." : "Track"}
       </button>

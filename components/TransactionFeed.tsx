@@ -55,7 +55,7 @@ export function TransactionFeed({
 }: TransactionFeedProps) {
   if (isLoading) {
     return (
-      <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900 p-6 animate-pulse shadow-sm">
+      <div className="rounded-[var(--radius-card)] glass-card p-6 animate-pulse">
         <div className="h-6 w-32 bg-zinc-200 dark:bg-zinc-700 rounded mb-4" />
         <div className="space-y-3">
           {[1, 2, 3, 4, 5].map((i) => (
@@ -71,7 +71,7 @@ export function TransactionFeed({
   const txs = data.data;
 
   return (
-    <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900 shadow-sm">
+    <div className="rounded-[var(--radius-card)] glass-card">
       <div className="px-4 pt-5 pb-4 border-b border-[var(--color-border)] flex items-center justify-between">
         <h2 className="text-lg font-semibold text-[var(--foreground)]">
           Recent Swaps

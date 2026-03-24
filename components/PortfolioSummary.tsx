@@ -13,7 +13,7 @@ interface PortfolioSummaryProps {
 export function PortfolioSummary({ data, isLoading, wallet }: PortfolioSummaryProps) {
   if (isLoading) {
     return (
-      <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900 p-6 animate-pulse">
+      <div className="rounded-[var(--radius-card)] glass-card p-6 animate-pulse">
         <div className="h-8 w-32 bg-zinc-200 dark:bg-zinc-700 rounded mb-4" />
         <div className="h-12 w-48 bg-zinc-200 dark:bg-zinc-700 rounded" />
       </div>
@@ -31,7 +31,7 @@ export function PortfolioSummary({ data, isLoading, wallet }: PortfolioSummaryPr
   const hasMore = sortedByBalance.length > 5;
 
   return (
-    <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900 p-6 shadow-sm">
+    <div className="rounded-[var(--radius-card)] glass-card p-6 hover-lift">
       <h2 className="text-sm font-medium text-[var(--color-muted)] mb-1">
         Portfolio Value
       </h2>

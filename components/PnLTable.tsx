@@ -34,7 +34,7 @@ function PnlCell({ value }: { value: number | null }) {
 export function PnLTable({ data, isLoading }: PnLTableProps) {
   if (isLoading) {
     return (
-      <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900 overflow-hidden animate-pulse shadow-sm">
+      <div className="rounded-[var(--radius-card)] glass-card overflow-hidden animate-pulse">
         <div className="p-4 border-b border-[var(--color-border)]">
           <div className="h-6 w-24 bg-zinc-200 dark:bg-zinc-700 rounded" />
         </div>
@@ -50,7 +50,7 @@ export function PnLTable({ data, isLoading }: PnLTableProps) {
   if (!data) return null;
 
   return (
-    <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900 overflow-hidden shadow-sm">
+    <div className="rounded-[var(--radius-card)] glass-card overflow-hidden hover-lift">
       <div className="p-4 border-b border-[var(--color-border)] flex flex-wrap gap-6">
         <div>
           <p className="text-xs text-[var(--color-muted)]">Total Realized P&L</p>

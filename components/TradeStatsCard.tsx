@@ -15,7 +15,7 @@ function formatUsd(value: number): string {
 export function TradeStatsCard({ data, isLoading }: TradeStatsCardProps) {
   if (isLoading) {
     return (
-      <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900 p-4 animate-pulse">
+      <div className="rounded-[var(--radius-card)] glass-card p-4 animate-pulse">
         <div className="flex flex-wrap gap-4">
           {[1, 2, 3, 4, 5].map((i) => (
             <div key={i} className="h-8 w-20 bg-zinc-200 dark:bg-zinc-700 rounded" />
@@ -28,7 +28,7 @@ export function TradeStatsCard({ data, isLoading }: TradeStatsCardProps) {
   if (!data || data.totalTrades === 0) return null;
 
   return (
-    <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] dark:bg-zinc-900 p-4 shadow-sm">
+    <div className="rounded-[var(--radius-card)] glass-card p-4 hover-lift">
       <div className="flex flex-wrap gap-6 text-sm">
         <div>
           <p className="text-xs text-[var(--color-muted)]">Win rate</p>
