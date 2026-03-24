@@ -19,14 +19,15 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://special-adventure.
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Solana Memecoin P&L Tracker",
-    template: "%s | Solana P&L Tracker",
+    default: "Solana Portfolio P&L Tracker",
+    template: "%s | Solana Portfolio P&L Tracker",
   },
   description:
-    "Track wallet P&L across memecoin trades on Solana. View portfolio value, swap history, and cumulative P&L over time — powered by Helius.",
+    "Track wallet P&L across all trades on Solana. View portfolio value, swap history, and cumulative P&L over time — powered by Helius.",
   keywords: [
     "Solana",
-    "memecoin",
+    "portfolio",
+    "portfolio tracker",
     "P&L",
     "profit and loss",
     "wallet tracker",
@@ -40,15 +41,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: SITE_URL,
-    siteName: "Solana Memecoin P&L Tracker",
-    title: "Solana Memecoin P&L Tracker",
+    siteName: "Solana Portfolio P&L Tracker",
+    title: "Solana Portfolio P&L Tracker",
     description:
-      "Track wallet P&L across memecoin trades on Solana. View portfolio value, swap history, and cumulative P&L over time.",
+      "Track wallet P&L across all trades on Solana. View portfolio value, swap history, and cumulative P&L over time.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Solana Memecoin P&L Tracker",
-    description: "Track wallet P&L across memecoin trades on Solana.",
+    title: "Solana Portfolio P&L Tracker",
+    description: "Track wallet P&L across all trades on Solana.",
     creator: "@adammomen",
   },
   robots: {
@@ -81,25 +82,6 @@ export default function RootLayout({
           <div className="flex-1 flex flex-col">
             {children}
           </div>
-          <footer className="mt-auto border-t border-[var(--color-border)]/60 py-8" role="contentinfo">
-            <div className="max-w-2xl mx-auto px-4 flex flex-col items-center justify-center gap-1">
-              <p className="text-sm text-[var(--color-muted)]">
-                Built with{" "}
-                <span className="inline-block text-red-500/90" aria-hidden>
-                  ♥
-                </span>{" "}
-                by{" "}
-                <Link
-                  href="https://github.com/adammomen"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 transition-colors duration-150"
-                >
-                  Adam Momen
-                </Link>
-              </p>
-            </div>
-          </footer>
         </Providers>
       </body>
     </html>

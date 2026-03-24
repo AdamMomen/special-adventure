@@ -122,10 +122,10 @@ function PageContent() {
             <div className="max-w-2xl mx-auto px-4 py-5 flex items-start justify-between gap-4">
               <div>
                 <h1 className="text-xl font-semibold text-[var(--foreground)]" id="site-title">
-                  Solana Memecoin P&L Tracker
+                  Solana Portfolio P&L Tracker
                 </h1>
                 <p className="text-sm text-[var(--color-muted)] mt-0.5" id="site-description">
-                  Track wallet P&L across memecoin trades — powered by Helius
+                  Track wallet P&L across all trades — powered by Helius
                 </p>
               </div>
               <div className="flex items-center gap-3">
@@ -190,14 +190,14 @@ function PageContent() {
         </>
       ) : (
         <main
-          className="flex-1 flex flex-col items-center justify-center px-4 min-h-[60vh]"
+          className="flex-1 flex flex-col items-center justify-center px-4"
           role="main"
           aria-label="Search for wallet"
         >
           <div className="w-full max-w-xl mx-auto flex flex-col items-center">
             <HomeIcon className="w-20 h-20 mb-6" />
             <h1 className="text-2xl font-semibold text-[var(--foreground)] mb-2">
-              Solana Memecoin P&L Tracker
+              Solana Portfolio P&L Tracker
             </h1>
             <p className="text-sm text-[var(--color-muted)] mb-8">
               Connect your wallet or enter an address to track portfolio, P&L, and swap history
@@ -218,10 +218,23 @@ function PageContent() {
                 <ErrorCard message={String(error)} onRetry={handleRetry} />
               </div>
             )}
-            
           </div>
         </main>
       )}
+      <footer className="py-4 text-center shrink-0 border-t border-[var(--color-border)]">
+        <a
+          href="https://x.com/0xMomen"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-xs text-[var(--color-muted)] hover:text-[var(--foreground)] transition-colors"
+          aria-label="Follow on X (Twitter)"
+        >
+          <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+          <span>@0xMomen</span>
+        </a>
+      </footer>
       <Toast
         message="Just updated"
         visible={showUpdatedToast}
