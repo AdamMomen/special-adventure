@@ -1,0 +1,126 @@
+
+> special-adventure@0.1.0 dev /Users/adam/ghq/github.com/adammomen/special-adventure
+> next dev
+
+▲ Next.js 16.2.0 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.188:3000
+- Environments: .env.local
+✓ Ready in 219ms
+
+ GET / 200 in 458ms (next.js: 145ms, application-code: 313ms)
+[browser] Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
+[browser] Phantom was registered as a Standard Wallet. The Wallet Adapter for Phantom can be removed from your app. (<anonymous>)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="en"
+                          className="geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__varia..."
+-                         data-darkreader-mode="dynamic"
+-                         data-darkreader-scheme="dark"
+-                         data-darkreader-proxy-injected="true"
+                        >
+                  ...
+ 
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+        <SegmentViewNode type="page" pagePath="page.tsx">
+          <SegmentTrieNode>
+          <ClientPageRoot Component={function Home} serverProvidedParams={{...}}>
+            <Home params={Promise} searchParams={Promise}>
+              <Suspense fallback={<div>}>
+                <PageContent>
+                  <div className="min-h-scre...">
+                    <main className="flex-1 fle..." role="main" aria-label="Search for...">
+                      <div className="w-full max...">
+                        <HomeIcon className="w-20 h-20 ...">
+                          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www..." className="w-20 h-20 ..." ...>
+                            <rect>
+                            <path
+                              d="M16 56V32l12 12 18-24 18 12 12-6"
+                              stroke="white"
+                              strokeWidth="3"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+-                             data-darkreader-inline-stroke=""
+-                             style={{--darkreader-inline-stroke:"var(--dark..."}}
+                            >
+                            <defs>
+                              <linearGradient id="home-icon-..." x1="0" y1="0" x2="80" y2="80" ...>
+                                <stop
+                                  stopColor="#8b5cf6"
+-                                 data-darkreader-inline-stopcolor=""
+-                                 style={{--darkreader-inline-stopcolor:"var(--dark..."}}
+                                >
+                                <stop
+                                  offset="1"
+                                  stopColor="#7c3aed"
+-                                 data-darkreader-inline-stopcolor=""
+-                                 style={{--darkreader-inline-stopcolor:"var(--dark..."}}
+                                >
+                        ...
+                    ...
+        ...
+      ...
+ 
+[browser] StreamMiddleware - Unknown response id "solflare-detect-metamask" (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/scripts/inpage.js:1:19440)
+✓ Compiled in 305ms
+✓ Compiled in 121ms
+✓ Compiled in 43ms
+✓ Compiled in 33ms
+✓ Compiled in 24ms
+ GET / 200 in 66ms (next.js: 14ms, application-code: 52ms)
+[browser] Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
+[browser] Phantom was registered as a Standard Wallet. The Wallet Adapter for Phantom can be removed from your app. (<anonymous>)
+[browser] StreamMiddleware - Unknown response id "solflare-detect-metamask" (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/scripts/inpage.js:1:19440)
+ GET / 200 in 42ms (next.js: 3ms, application-code: 39ms)
+[browser] Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
+[browser] Phantom was registered as a Standard Wallet. The Wallet Adapter for Phantom can be removed from your app. (<anonymous>)
+[browser] StreamMiddleware - Unknown response id "solflare-detect-metamask" (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/scripts/inpage.js:1:19440)
+✓ Compiled in 19ms
