@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { WalletMultiButton, useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useQuery, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { WalletInput } from "@/components/WalletInput";
 import { HomeIcon } from "@/components/HomeIcon";
@@ -68,6 +68,7 @@ function PageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const wallet = searchParams.get("wallet")?.trim() || null;
+  const { setVisible } = useWalletModal();
 
   const setWallet = useCallback(
     (addr: string | null) => {
@@ -198,7 +199,14 @@ function PageContent() {
               Solana Portfolio P&L Tracker
             </h1>
             <p className="text-sm text-[var(--color-muted)] mb-8">
-              Enter a wallet address to track portfolio, P&L, and swap history
+              Enter a wallet address or connect your{" "}
+              <button
+                type="button"
+                onClick={() => setVisible(true)}
+                className="underline underline-offset-2 hover:text-violet-600 dark:hover:text-violet-400 transition-colors cursor-pointer"
+              >
+                wallet
+              </button>
             </p>
             <div className="w-full mb-6">
               <WalletInput
@@ -208,14 +216,10 @@ function PageContent() {
               />
             </div>
             {error && (
-              <div className="w-full mb-6">
+              <div className="w-full mb-4">
                 <ErrorCard message={String(error)} onRetry={handleRetry} />
               </div>
             )}
-            <div className="flex items-center gap-3 text-xs text-[var(--color-muted)]">
-              <span>Or connect your wallet</span>
-              <WalletMultiButton className="!rounded-[var(--radius-input)] !bg-zinc-100 dark:!bg-zinc-800 hover:!bg-zinc-200 dark:hover:!bg-zinc-700 !text-[var(--foreground)] !text-xs !font-medium !h-8 !px-3 !min-w-0" />
-            </div>
           </div>
         </main>
       )}
