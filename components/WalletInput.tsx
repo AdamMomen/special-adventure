@@ -24,7 +24,7 @@ export function WalletInput({ onSearch, isLoading, currentWallet }: WalletInputP
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex gap-2 w-full"
+      className="flex gap-2 w-full max-w-sm mx-auto"
       role="search"
       aria-label="Track wallet by address"
     >

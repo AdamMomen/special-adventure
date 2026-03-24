@@ -18,10 +18,19 @@ export function SolanaProvider({ children }: { children: React.ReactNode }) {
   );
 
   const wallets = useMemo(
-    () => [
-      new PhantomWalletAdapter(),
-      new SolflareWalletAdapter(),
-    ],
+    () => {
+      const adapters = [
+        new PhantomWalletAdapter(),
+        new SolflareWalletAdapter(),
+      ];
+      const seen = new Set();
+      return adapters.filter((wallet) => {
+        const name = wallet.name;
+        if (seen.has(name)) return false;
+        seen.add(name);
+        return true;
+      });
+    },
     []
   );
 

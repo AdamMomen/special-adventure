@@ -124,3 +124,11 @@ https://react.dev/link/hydration-mismatch
 [browser] Phantom was registered as a Standard Wallet. The Wallet Adapter for Phantom can be removed from your app. (<anonymous>)
 [browser] StreamMiddleware - Unknown response id "solflare-detect-metamask" (chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/scripts/inpage.js:1:19440)
 ✓ Compiled in 19ms
+✓ Compiled in 37ms
+✓ Compiled in 27ms
+[browser] Encountered two children with the same key, `MetaMask`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+[browser] Encountered two children with the same key, `MetaMask`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+[browser] Encountered two children with the same key, `MetaMask`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+    at Set.forEach (<anonymous>) (<anonymous>)
+[browser] Encountered two children with the same key, `MetaMask`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+✓ Compiled in 101ms
