@@ -2,3 +2,6 @@
 # These packages are transitive deps of @solana/wallet-adapter-wallets
 [phases.setup]
 aptPkgs = ["...", "python3", "build-essential"]
+
+[variables]
+NODE_VERSION = "20"
