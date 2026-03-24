@@ -1,0 +1,51 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+.next
+out
+build
+dist
+
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env files (secrets)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Debug
+pnl-debug-output.json
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Docker
+Dockerfile
+docker-compose*
+.dockerignore
+
+# Vercel
+.vercel
+
+# Nixpacks
+nixpacks.toml
